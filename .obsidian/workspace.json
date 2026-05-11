@@ -1,0 +1,206 @@
+{
+  "main": {
+    "id": "1ca0ef8b448e76a9",
+    "type": "split",
+    "children": [
+      {
+        "id": "7be7ac542b867b51",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e224f388fe234099",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "fastapi-agent/README.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "README"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "aba8fc95060d72ee",
+    "type": "split",
+    "children": [
+      {
+        "id": "aced3f185c78ba5a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "4b1cabf37dbb556c",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "90a04d3c1c2a9a76",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "3dcdab2d61f44f22",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "679726e03657b323",
+    "type": "split",
+    "children": [
+      {
+        "id": "bbf170f04d7639b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "18e965c6453c8c0e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "fastapi-agent/notes/01-http-asgi-fastapi-lifecycle.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "01-http-asgi-fastapi-lifecycle 的反向链接列表"
+            }
+          },
+          {
+            "id": "ec896d154200ce49",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "fastapi-agent/notes/01-http-asgi-fastapi-lifecycle.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "01-http-asgi-fastapi-lifecycle 的出链列表"
+            }
+          },
+          {
+            "id": "e3acb3ac45101ca0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "1644bf931760db3b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "fd54c48e22dcafd0",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "fastapi-agent/notes/01-http-asgi-fastapi-lifecycle.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "01-http-asgi-fastapi-lifecycle 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "e224f388fe234099",
+  "lastOpenFiles": [
+    "fastapi-agent/notes/04-error-status-middleware-logging.md",
+    "fastapi-agent/exercises/03-pydantic-validation-serialization.md",
+    "fastapi-agent/_meta/knowledge-map.md",
+    "fastapi-agent/_meta/spaced-repetition.md",
+    "fastapi-agent/exercises/01-http-asgi-fastapi-lifecycle.md",
+    "fastapi-agent/notes/03-pydantic-validation-serialization.md",
+    "fastapi-agent/notes/01-http-asgi-fastapi-lifecycle.md",
+    "fastapi-agent/notes/02-path-operations-dependencies-structure.md",
+    "fastapi-agent/projects/demos/01-minimal-fastapi-api/environment.yml",
+    "fastapi-agent/projects/demos/01-minimal-fastapi-api/app/main.py",
+    "fastapi-agent/projects/demos/01-minimal-fastapi-api/app",
+    "fastapi-agent/projects/demos/01-minimal-fastapi-api/README.md",
+    "fastapi-agent/projects/demos/01-minimal-fastapi-api",
+    "fastapi-agent/_meta/progress.md",
+    "fastapi-agent/projects/demos.md",
+    "fastapi-agent/projects/roadmap.md",
+    "fastapi-agent/summaries/README.md"
+  ]
+}
