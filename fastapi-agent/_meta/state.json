@@ -16,7 +16,7 @@
   },
   "current": {
     "module": "模块 2：数据库与 SQLAlchemy",
-    "concept": "2.4 表关系、懒加载/预加载与 N+1 问题"
+    "concept": "2.5 Alembic 迁移与数据库结构演进"
   },
   "concepts": {
     "2.3 不遮蔽数据库细节的 CRUD 写法": {
@@ -33,12 +33,35 @@
         ]
       },
       "updated_at": "2026-05-11"
+    },
+    "2.4 表关系、懒加载/预加载与 N+1 问题": {
+      "status": "mastered",
+      "module": "模块 2：数据库与 SQLAlchemy",
+      "note_path": "notes/07-relationships-loading-n-plus-one.md",
+      "connections": {
+        "related": [
+          "2.2 SQLAlchemy 2.0 核心概念：engine、session、model、query",
+          "2.3 不遮蔽数据库细节的 CRUD 写法"
+        ],
+        "prerequisite_for": [
+          "2.5 Alembic 迁移与数据库结构演进",
+          "3.2 用依赖注入管理数据库 session 和业务服务"
+        ]
+      },
+      "updated_at": "2026-05-11"
     }
   },
   "reviews": {
     "due": [
       {
         "concept": "2.3 不遮蔽数据库细节的 CRUD 写法",
+        "last_reviewed": "2026-05-11",
+        "next_review": "2026-05-12",
+        "interval": 1,
+        "ease": 2.5
+      },
+      {
+        "concept": "2.4 表关系、懒加载/预加载与 N+1 问题",
         "last_reviewed": "2026-05-11",
         "next_review": "2026-05-12",
         "interval": 1,
@@ -295,6 +318,14 @@
       "summary": "2.4 拆分练习代码并增加预加载对比：将 practice.py 拆分为 db.py、models.py、crud.py、loading_examples.py 和入口 practice.py；新增 list_users_lazy、list_users_with_selectinload、list_users_with_joinedload，用于对比懒加载、批量预加载和 JOIN 风格预加载。新增 exercises/07-relationships-loading-n-plus-one.md；已运行验证三种加载方式，观察到懒加载多次 SELECT records，selectinload 使用 WHERE user_id IN (...)，joinedload 使用 JOIN 并需要 unique。",
       "mastered_concepts": [],
       "next_session": "让学习者重点练习 selectinload(User.records) 参数含义，并解释 joinedload 为什么需要 unique。"
+    },
+    {
+      "date": "2026-05-11",
+      "summary": "2.4 掌握度自测通过：学习者能解释 selectinload 的两次查询与外键归档、relationship append 后 Python 对象层双向绑定以及 flush/commit 时外键同步，也能对比 lazy/selectinload/joinedload 的 SQL 次数和对象装配。小纠正：100 个 user、每人约 3 条 records 时，lazy loading 是 1 + 100 = 101 次 SQL，不是 301 次；300 更接近 records 结果行数量。",
+      "mastered_concepts": [
+        "2.4 表关系、懒加载/预加载与 N+1 问题"
+      ],
+      "next_session": "进入 2.5 Alembic 迁移与数据库结构演进；2026-05-12 复习 2.3 和 2.4。"
     }
   ]
 }

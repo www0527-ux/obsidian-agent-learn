@@ -1,7 +1,8 @@
-name: fastapi-agent-demo
+name: sqlalchemy-sqlite-demo
 channels:
   - conda-forge
 dependencies:
   - python=3.11
   - sqlalchemy
+  - alembic
 

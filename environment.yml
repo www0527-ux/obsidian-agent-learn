@@ -1,4 +1,4 @@
-name: fastapi-demo-01
+name: obsidian-agent-learn
 channels:
   - conda-forge
 dependencies:
@@ -7,5 +7,6 @@ dependencies:
   - uvicorn
   - pydantic
   - sqlalchemy
+  - alembic
   - pytest
   - httpx

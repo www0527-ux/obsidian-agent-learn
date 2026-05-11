@@ -60,6 +60,8 @@
 ```bash
 git clone git@github.com:www0527-ux/obsidian-agent-learn.git
 cd obsidian-agent-learn
+conda env create -f environment.yml
+conda activate obsidian-agent-learn
 ```
 
 用 Obsidian 打开当前目录，就可以把 `fastapi-agent` 当作学习 vault 阅读和维护。
@@ -106,12 +108,13 @@ python practice.py
 
 这个仓库推荐按“小步学习 + 小步验证 + 小步记录”的方式推进：
 
-1. 先看 `_meta/knowledge-map.md`，确认今天要学的 1-2 个概念。
-2. 阅读 `notes/` 中的概念笔记。
-3. 完成 `exercises/` 里的练习。
-4. 在 `projects/demos/` 写一个小 demo，把概念跑起来。
-5. 用自己的话在 `summaries/` 写短总结。
-6. 更新 `_meta/progress.md` 和 `_meta/spaced-repetition.md`，保留学习轨迹。
+1. 先看 `_meta/current.md`，确认当前位置、复习项和下一步文件；工具需要结构化状态时读 `_meta/state-lite.json`。
+2. 再看 `_meta/knowledge-map.md`，确认今天要学的 1-2 个概念。
+3. 阅读 `notes/` 中的概念笔记。
+4. 完成 `exercises/` 里的练习。
+5. 在 `projects/demos/` 写一个小 demo，把概念跑起来。
+6. 用自己的话在 `summaries/` 写短总结。
+7. 更新 `_meta/current.md`、`_meta/state-lite.json`、`_meta/progress.md` 和 `_meta/spaced-repetition.md`，保留学习轨迹。
 
 ## 最终作品方向
 

@@ -3,9 +3,9 @@
 ## 当前状态
 <!-- BLOOM:CURRENT_STATE:START -->
 - **当前模块**：模块 2：数据库与 SQLAlchemy
-- **当前概念**：2.4 表关系、懒加载/预加载与 N+1 问题
-- **总体掌握度**：1/42 个概念已掌握
-- **学习次数**：41
+- **当前概念**：2.5 Alembic 迁移与数据库结构演进
+- **总体掌握度**：2/42 个概念已掌握
+- **学习次数**：42
 - **上次学习**：2026-05-11
 - **学习者水平**：中级接触者，但需要系统重建基础
 - **语言**：中文
@@ -25,6 +25,26 @@
 ## 学习记录
 
 <!-- BLOOM:SESSION_LOG:START -->
+### 2026-05-11：2.5 新增 Alembic 文件组织范本
+
+- 学习者反馈 Alembic 语法和环境文件显得复杂，希望先有一个可模仿的文件夹范本。
+- 新增 `projects/demos/03-alembic-migration-template/`，包含 `app/db.py`、`app/models.py`、`alembic.ini`、`migrations/env.py`、`script.py.mako` 和两个示例迁移文件。
+- 当前学习目标：先读懂 `models.py` 描述目标结构、`versions/*.py` 描述结构演进历史、`env.py` 把 Alembic 接到 `Base.metadata`，暂不要求运行命令。
+
+### 2026-05-11：2.4 掌握度自测通过
+
+- 学习者能说明 `selectinload(User.records)` 先查父对象，再用子表外键 `user_id IN (...)` 批量查 records，最后按外键归档回各自的 `User.records`，因此不会展开重复父对象，也不需要 `.unique()`。
+- 能说明 `user.records.append(record)` 会在 Python 对象层同步 `record.user = user`；真正的 `record.user_id` 会在 flush/commit 时根据数据库生成的 `user.id` 写入。
+- 能对比 lazy loading、`selectinload`、`joinedload`：100 个 user、每人约 3 条 records 时，lazy 是 `1 + 100 = 101` 次 SQL，`selectinload` 是 2 次 SQL，`joinedload` 是 1 次 SQL。小纠正：300 是 records 结果行数量，不是 lazy 的 SQL 次数。
+- 将 `2.4 表关系、懒加载/预加载与 N+1 问题` 标记为掌握，并安排 2026-05-12 复习。下一步进入 2.5 Alembic 迁移与数据库结构演进。
+
+### 2026-05-11：2.4 深入理解 joinedload 与 unique
+
+- 追问并澄清 `session.scalars(stmt)`、`session.execute(stmt)`、`.unique()` 在 `joinedload(User.records)` 下的关系。
+- 关键理解：`joinedload` 让一对多关系在 SQL 行层面展开；identity map 按实体类型和主键复用同一个 `User` 对象；relationship loader 把每一行里的 `LearningRecord` 填进同一个 `User.records`；`.unique()` 只负责过滤最终结果流里重复出现的父对象引用。
+- 已新增笔记 [[../notes/07-relationships-loading-n-plus-one]]。
+- 下一步：继续练习 `selectinload(User.records)` 的参数含义，并对比 `selectinload` 与 `joinedload` 的适用场景。
+
 ### 2026-05-11：2.4 拆分练习代码并增加预加载对比
 
 - 将 `practice.py` 拆分为 `db.py`、`models.py`、`crud.py`、`loading_examples.py` 和入口 `practice.py`，避免单文件过长。

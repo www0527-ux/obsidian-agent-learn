@@ -1,0 +1,47 @@
+from __future__ import annotations
+
+from datetime import datetime
+
+from sqlalchemy import DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+
+from app.db import Base
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    name: Mapped[str] = mapped_column(String(50), nullable=False)
+
+    # This column is introduced by migration 002 in this template.
+    # It is nullable first, because old rows do not have email values yet.
+    email: Mapped[str | None] = mapped_column(String(255), nullable=True)
+
+    records: Mapped[list[LearningRecord]] = relationship(
+        "LearningRecord",
+        back_populates="user",
+    )
+
+
+class LearningRecord(Base):
+    __tablename__ = "learning_records"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    user_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("users.id"),
+        nullable=False,
+    )
+    title: Mapped[str] = mapped_column(String(100), nullable=False)
+    content: Mapped[str] = mapped_column(String(255), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False,
+    )
+
+    user: Mapped[User] = relationship(
+        "User",
+        back_populates="records",
+    )

@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "topic": "fastapi + agent",
+  "updated_at": "2026-05-11",
+  "learner": {
+    "level": "intermediate",
+    "language": "zh-CN",
+    "pace": "adaptive",
+    "preferences": [
+      "project-based learning",
+      "many independent demos",
+      "backend foundations before agent integration",
+      "Obsidian-linked notes and progress"
+    ]
+  },
+  "current": {
+    "module": "模块 2：数据库与 SQLAlchemy",
+    "concept": "2.5 Alembic 迁移与数据库结构演进"
+  },
+  "mastered_concepts": [
+    "2.3 不遮蔽数据库细节的 CRUD 写法",
+    "2.4 表关系、懒加载/预加载与 N+1 问题"
+  ],
+  "learning_concepts": [
+    "2.5 Alembic 迁移与数据库结构演进"
+  ],
+  "reviews": {
+    "due": [
+      {
+        "concept": "2.3 不遮蔽数据库细节的 CRUD 写法",
+        "last_reviewed": "2026-05-11",
+        "next_review": "2026-05-12",
+        "interval": 1,
+        "ease": 2.5
+      },
+      {
+        "concept": "2.4 表关系、懒加载/预加载与 N+1 问题",
+        "last_reviewed": "2026-05-11",
+        "next_review": "2026-05-12",
+        "interval": 1,
+        "ease": 2.5
+      }
+    ],
+    "mastered": []
+  },
+  "session_count": 42,
+  "last_session": {
+    "date": "2026-05-11",
+    "summary": "开始 2.5 Alembic 迁移与数据库结构演进：先建立 Alembic 是管理数据库 DDL 变更历史的工具这一心智模型，并新增可阅读模仿的文件组织范本 projects/demos/03-alembic-migration-template/。",
+    "next_session": "阅读 Alembic 范本中的 README、models.py、versions/001 和 versions/002，先理解文件分工和 upgrade/downgrade。",
+    "detail_path": "_meta/sessions/2026-05-11-relationship-loading.md"
+  },
+  "read_next": [
+    "notes/07-relationships-loading-n-plus-one.md",
+    "projects/demos/03-alembic-migration-template/README.md",
+    "projects/demos/03-alembic-migration-template/migrations/versions/001_create_users_and_learning_records.py",
+    "projects/demos/03-alembic-migration-template/migrations/versions/002_add_user_email.py",
+    "projects/roadmap.md"
+  ]
+}
