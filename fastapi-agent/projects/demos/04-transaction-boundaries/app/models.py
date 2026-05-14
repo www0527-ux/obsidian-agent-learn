@@ -12,13 +12,8 @@ class User(Base):
     __tablename__ = "users"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    name: Mapped[str] = mapped_column(String(50), nullable=False)
+    name: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
 
-    # This column is introduced by migration 002 in this template.
-    # It is nullable first, because old rows do not have email values yet.
-    email: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    
-    avatar_url: Mapped[str | None] = mapped_column(String(255), nullable=True)
     records: Mapped[list[LearningRecord]] = relationship(
         "LearningRecord",
         back_populates="user",
@@ -36,6 +31,7 @@ class LearningRecord(Base):
     )
     title: Mapped[str] = mapped_column(String(100), nullable=False)
     content: Mapped[str] = mapped_column(String(255), nullable=False)
+    view_count: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=datetime.utcnow,

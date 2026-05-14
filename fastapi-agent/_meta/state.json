@@ -2,7 +2,7 @@
   "version": 2,
   "topic": "fastapi + agent",
   "created_at": "2026-05-07",
-  "updated_at": "2026-05-11",
+  "updated_at": "2026-05-14",
   "learner": {
     "level": "intermediate",
     "language": "zh-CN",
@@ -15,8 +15,8 @@
     ]
   },
   "current": {
-    "module": "模块 2：数据库与 SQLAlchemy",
-    "concept": "2.5 Alembic 迁移与数据库结构演进"
+    "module": "?? 2????? SQLAlchemy",
+    "concept": "2.6 ??????????"
   },
   "concepts": {
     "2.3 不遮蔽数据库细节的 CRUD 写法": {
@@ -49,23 +49,53 @@
         ]
       },
       "updated_at": "2026-05-11"
+    },
+    "2.5 Alembic 迁移与数据库结构演进": {
+      "status": "learning",
+      "module": "模块 2：数据库与 SQLAlchemy",
+      "note_path": "",
+      "connections": {
+        "related": [],
+        "prerequisite_for": []
+      },
+      "updated_at": "2026-05-12"
+    },
+    "2.6 事务、并发与失败边界": {
+      "status": "learning",
+      "module": "模块 2：数据库与 SQLAlchemy",
+      "note_path": "",
+      "connections": {
+        "related": [],
+        "prerequisite_for": []
+      },
+      "updated_at": "2026-05-12"
+    },
+    "2.6 ??????????": {
+      "status": "learning",
+      "module": "?? 2????? SQLAlchemy",
+      "note_path": "",
+      "connections": {
+        "related": [],
+        "prerequisite_for": []
+      },
+      "updated_at": "2026-05-13"
     }
   },
   "reviews": {
     "due": [
       {
         "concept": "2.3 不遮蔽数据库细节的 CRUD 写法",
-        "last_reviewed": "2026-05-11",
-        "next_review": "2026-05-12",
-        "interval": 1,
-        "ease": 2.5
+        "last_reviewed": "2026-05-14",
+        "next_review": "2026-05-17",
+        "interval": 3,
+        "ease": 2.6
       },
       {
         "concept": "2.4 表关系、懒加载/预加载与 N+1 问题",
-        "last_reviewed": "2026-05-11",
-        "next_review": "2026-05-12",
-        "interval": 1,
-        "ease": 2.5
+        "last_reviewed": "2026-05-14",
+        "next_review": "2026-05-17",
+        "interval": 3,
+        "ease": 2.6
       }
     ],
     "mastered": []
@@ -326,6 +356,112 @@
         "2.4 表关系、懒加载/预加载与 N+1 问题"
       ],
       "next_session": "进入 2.5 Alembic 迁移与数据库结构演进；2026-05-12 复习 2.3 和 2.4。"
+    },
+    {
+      "index": 43,
+      "date": "2026-05-12",
+      "summary": "继续学习 2.5 Alembic 迁移：明确 Alembic 的作用是管理数据库 DDL 变更历史，而不是替代 ORM models；理解 env.py 主要负责把 Alembic 和 SQLAlchemy 的 Base.metadata 接起来。通过在 models.py 中新增 avatar_url 字段，先执行已有 001/002 迁移创建本地 SQLite 数据库，再使用 autogenerate 生成第三个 version，并执行 upgrade head 将数据库更新到最新结构。随后查看 alembic_version 表和 users 表结构，确认 avatar_url 已进入数据库；理解 upgrade head 会从 alembic_version 记录的当前 revision 一路升级到 head，downgrade -1 表示从当前 revision 回退一步。",
+      "module": "模块 2：数据库与 SQLAlchemy",
+      "concept": "2.5 Alembic 迁移与数据库结构演进",
+      "covered_concepts": [
+        "Alembic 的作用：管理数据库结构演进历史",
+        "alembic_version 表记录当前数据库 revision",
+        "upgrade head 从当前 revision 升级到最新 head",
+        "downgrade -1 回退一个 revision",
+        "autogenerate 生成迁移草稿后需要人工审阅",
+        "SQLite 表结构检查：sqlite_master 与 pragma table_info"
+      ],
+      "mastered_concepts": [],
+      "struggles": [
+        "env.py 作为框架胶水代码仍然偏抽象，暂时不要求复写，只保留关键识别点",
+        "对 migration 文件的学习目标已从手写调整为审阅 Alembic 自动生成的草稿"
+      ],
+      "wins": [
+        "成功生成并执行第三个 migration：add user avatar_url",
+        "能解释本地没有 db 时 Alembic 会从 base 依次执行 001、002、003",
+        "能说明 online 模式会真实连接数据库执行迁移",
+        "能通过数据库结构确认 migration 是否生效"
+      ],
+      "next_session": "做一次 2.5 小自测：解释 models、versions、env.py、alembic.ini、alembic_version 各自职责；再练习 downgrade -1 后检查 avatar_url 消失，upgrade head 后检查它恢复。",
+      "detail_path": "_meta/sessions/2026-05-12-043-2-5-Alembic-迁移与数据库结构演进.md"
+    },
+    {
+      "index": 44,
+      "date": "2026-05-12",
+      "summary": "开始学习 2.6 事务、并发与失败边界。本次重点完成事务与失败边界部分：理解 commit 是事务结束并确认成功的标志，flush 会发送 SQL 并可拿到数据库生成的 id，但不会结束事务；rollback 可以撤销同一事务中尚未提交的 flush 操作。通过新建 demos/04-transaction-boundaries 练习，观察提前 commit 会留下半完成状态，flush + rollback 可以保持原子性，with session.begin() 可以自动提交或回滚。完成 tasks.py 三个实践任务并通过 check_tasks.py，能处理 user + default record 的原子创建、NOT NULL 失败回滚、外键失败回滚。已意识到 2.6 的并发部分尚未学习，需要继续 2.6b。",
+      "module": "模块 2：数据库与 SQLAlchemy",
+      "concept": "2.6 事务、并发与失败边界",
+      "covered_concepts": [
+        "事务边界与业务成功/失败边界",
+        "flush 与 commit 的区别",
+        "rollback 撤销未提交事务",
+        "提前 commit 会破坏原子性",
+        "with session.begin() 自动管理事务",
+        "IntegrityError 与失败回滚",
+        "并发部分待继续：lost update、原子 UPDATE、唯一约束冲突"
+      ],
+      "mastered_concepts": [],
+      "struggles": [
+        "并发控制尚未展开学习，2.6 暂不标记为完全掌握",
+        "需要继续通过 lost update 和冲突处理实验建立并发直觉"
+      ],
+      "wins": [
+        "创建并运行 demos/04-transaction-boundaries 事务练习 demo",
+        "能解释 Alice 留下、Bob 消失的原因",
+        "完成 tasks.py 三个事务实践任务",
+        "check_tasks.py 三项全部通过",
+        "明确 2.6 需要拆成事务失败边界和并发边界两部分"
+      ],
+      "next_session": "继续 2.6b 并发与冲突边界：新增 concurrency_examples.py，演示 lost update、数据库原子 UPDATE、唯一约束冲突与 IntegrityError -> 409 的处理思路。",
+      "detail_path": "_meta/sessions/2026-05-12-044-2-6-事务-并发与失败边界.md"
+    },
+    {
+      "index": 45,
+      "date": "2026-05-13",
+      "summary": "???? 2.6b ??????????? lost update ?????? UPDATE ???????? concurrency_examples.py??? LearningRecord ?? view_count ??????? session ???? view_count=0 ????? +1????????? 1?????? session ??????????????? SQLAlchemy update(...).values(view_count=LearningRecord.view_count + 1) ? +1 ???????????????????? 2????????? UPDATE ????????",
+      "module": "?? 2????? SQLAlchemy",
+      "concept": "2.6 ??????????",
+      "covered_concepts": [
+        "lost update ????????",
+        "Python ?????-?-??????? UPDATE ???",
+        "???? Session ??????"
+      ],
+      "mastered_concepts": [],
+      "struggles": [
+        "??????? IntegrityError -> 409 ??????",
+        "2.6 ??????????????????"
+      ],
+      "wins": [
+        "????? concurrency_examples.py",
+        "????? ORM ?????? view_count=1",
+        "??????? view_count = view_count + 1 ?? view_count=2"
+      ],
+      "next_session": "?? 2.6b?? User.name ????????????????????????? IntegrityError??????? FastAPI ???? 409 Conflict?",
+      "detail_path": "_meta/sessions/2026-05-13-045-2-6.md"
+    },
+    {
+      "index": 46,
+      "date": "2026-05-13",
+      "summary": "?? 2.6b ?????????????????????? FastAPI ?? demo??? app/ ???? db.py?models.py?schemas.py?exceptions.py?services/users.py?api/users.py ? main.py??? engine ?? sqlite+aiosqlite?session ?? Depends ???User.name ???????????? create_user service ?????????API ?????? UserNameConflictError ???? 409 Conflict?",
+      "module": "?? 2????? SQLAlchemy",
+      "concept": "2.6 ??????????",
+      "covered_concepts": [
+        "?? FastAPI + SQLAlchemy demo ?????",
+        "AsyncSession ????",
+        "???????? API 409 ?????"
+      ],
+      "mastered_concepts": [],
+      "struggles": [
+        "?? Python ???? aiosqlite??? app ??????????",
+        "create_user service ??????????????"
+      ],
+      "wins": [
+        "???? FastAPI app ??",
+        "?????????????? create_user ????",
+        "?? py_compile ????"
+      ],
+      "next_session": "?? app/services/users.py ?? async create_user?add?commit?refresh??? IntegrityError ? rollback ? raise UserNameConflictError????? FastAPI???? POST /users ??????? 409?",
+      "detail_path": "_meta/sessions/2026-05-13-046-2-6.md"
     }
   ]
 }

@@ -1,20 +1,13 @@
-# 间隔复习：FastAPI + Agent
+# Spaced Repetition Schedule
 
-## 当前待复习
+> Generated from `_meta/state.json`. Update reviews via `scripts/review-check.py` or `scripts/session-commit.py`.
 
-<!-- BLOOM:DUE:START -->
-- `2.3 不遮蔽数据库细节的 CRUD 写法`：下次复习 2026-05-12，间隔 1 天，ease 2.5。
-- `2.4 表关系、懒加载/预加载与 N+1 问题`：下次复习 2026-05-12，间隔 1 天，ease 2.5。
-<!-- BLOOM:DUE:END -->
+## Due for Review
+| Concept | Last reviewed | Next review | Interval | Ease |
+|---------|---------------|-------------|----------|------|
+| 2.3 不遮蔽数据库细节的 CRUD 写法 | 2026-05-14 | 2026-05-17 | 3 | 2.6 |
+| 2.4 表关系、懒加载/预加载与 N+1 问题 | 2026-05-14 | 2026-05-17 | 3 | 2.6 |
 
-## 已安排复习
-
-<!-- BLOOM:SCHEDULE:START -->
-- 暂无已长期掌握概念。
-<!-- BLOOM:SCHEDULE:END -->
-
-## 复习规则
-
-- 每掌握一个概念后，先安排 1 天后复习，再安排 3 天后复习，之后根据记忆稳定程度延长间隔。
-- 如果回忆不稳定，把间隔重置为 1 天，并补一条纠错笔记。
-- 复习问题要尽量要求“解释”，而不是只做选择或识别。
+## Mastered (interval > 30 days)
+| Concept | Last reviewed | Next review | Interval | Ease |
+|---------|---------------|-------------|----------|------|

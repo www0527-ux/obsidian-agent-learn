@@ -1,0 +1,12 @@
+name: transaction-boundaries-demo
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - fastapi
+  - uvicorn
+  - pydantic
+  - sqlalchemy
+  - aiosqlite
+  - pytest
+  - httpx

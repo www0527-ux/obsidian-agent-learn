@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "fastapi-agent/README.md",
+                "file": "fastapi-agent/exercises/03-pydantic-validation-serialization.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "03-pydantic-validation-serialization"
             }
           }
         ]
@@ -185,13 +185,14 @@
   },
   "active": "e224f388fe234099",
   "lastOpenFiles": [
+    "fastapi-agent/exercises/01-http-asgi-fastapi-lifecycle.md",
+    "fastapi-agent/notes/01-http-asgi-fastapi-lifecycle.md",
+    "fastapi-agent/README.md",
     "fastapi-agent/notes/04-error-status-middleware-logging.md",
     "fastapi-agent/exercises/03-pydantic-validation-serialization.md",
     "fastapi-agent/_meta/knowledge-map.md",
     "fastapi-agent/_meta/spaced-repetition.md",
-    "fastapi-agent/exercises/01-http-asgi-fastapi-lifecycle.md",
     "fastapi-agent/notes/03-pydantic-validation-serialization.md",
-    "fastapi-agent/notes/01-http-asgi-fastapi-lifecycle.md",
     "fastapi-agent/notes/02-path-operations-dependencies-structure.md",
     "fastapi-agent/projects/demos/01-minimal-fastapi-api/environment.yml",
     "fastapi-agent/projects/demos/01-minimal-fastapi-api/app/main.py",

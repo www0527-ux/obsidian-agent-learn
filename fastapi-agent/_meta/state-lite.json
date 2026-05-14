@@ -1,7 +1,7 @@
 {
   "version": 2,
   "topic": "fastapi + agent",
-  "updated_at": "2026-05-11",
+  "updated_at": "2026-05-14",
   "learner": {
     "level": "intermediate",
     "language": "zh-CN",
@@ -14,15 +14,17 @@
     ]
   },
   "current": {
-    "module": "模块 2：数据库与 SQLAlchemy",
-    "concept": "2.5 Alembic 迁移与数据库结构演进"
+    "module": "模块 3：FastAPI 应用架构",
+    "concept": "3.1 分层结构：router、service、repository、schema、model"
   },
   "mastered_concepts": [
     "2.3 不遮蔽数据库细节的 CRUD 写法",
     "2.4 表关系、懒加载/预加载与 N+1 问题"
   ],
   "learning_concepts": [
-    "2.5 Alembic 迁移与数据库结构演进"
+    "2.5 Alembic 迁移与数据库结构演进",
+    "2.6 ??????????",
+    "2.6 事务、并发与失败边界"
   ],
   "reviews": {
     "due": [
@@ -43,18 +45,11 @@
     ],
     "mastered": []
   },
-  "session_count": 42,
+  "session_count": 46,
   "last_session": {
-    "date": "2026-05-11",
-    "summary": "开始 2.5 Alembic 迁移与数据库结构演进：先建立 Alembic 是管理数据库 DDL 变更历史的工具这一心智模型，并新增可阅读模仿的文件组织范本 projects/demos/03-alembic-migration-template/。",
-    "next_session": "阅读 Alembic 范本中的 README、models.py、versions/001 和 versions/002，先理解文件分工和 upgrade/downgrade。",
-    "detail_path": "_meta/sessions/2026-05-11-relationship-loading.md"
-  },
-  "read_next": [
-    "notes/07-relationships-loading-n-plus-one.md",
-    "projects/demos/03-alembic-migration-template/README.md",
-    "projects/demos/03-alembic-migration-template/migrations/versions/001_create_users_and_learning_records.py",
-    "projects/demos/03-alembic-migration-template/migrations/versions/002_add_user_email.py",
-    "projects/roadmap.md"
-  ]
+    "date": "2026-05-14",
+    "summary": "?? 2.6b ?????????????????????? FastAPI ?? demo??? app/ ???? db.py?models.py?schemas.py?exceptions.py?services/users.py?api/users.py ? main.py??? engine ?? sqlite+aiosqlite?session ?? Depends ???User.name ???????????? create_user service ?????????API ?????? UserNameConflictError ???? 409 Conflict?",
+    "next_session": "学习 3.1 的分层职责，并把现有 demo 中的 app/api、app/services、app/schemas、app/models、app/db 对号入座。",
+    "detail_path": "notes/08-layered-fastapi-architecture.md"
+  }
 }
