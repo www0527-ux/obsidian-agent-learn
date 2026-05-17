@@ -68,8 +68,27 @@ Context-efficient vaults also include `_meta/current.md` as the short resume ent
 3. **Teach new material** — Select strategy based on content type (see below)
 4. **Verify mastery** — Test understanding before marking complete
 5. **Active output** — Ask learner to write summaries, create exercises, or apply knowledge
-6. **Persist session** - Run `scripts/session-commit.py` with a JSON payload to update current state, state-lite, progress, knowledge map, spaced repetition, notes, session details, and `_meta/state.json`
+6. **Persist session** - Run `scripts/session-commit.py` with a UTF-8 payload file or stdin to update current state, state-lite, progress, knowledge map, spaced repetition, notes, session details, and `_meta/state.json`
 7. **Preview next session** — Tell the learner what's coming next
+
+## Encoding Safety
+
+When persisting Chinese or other non-ASCII learning content, preserve UTF-8 end to end. Do not pass non-ASCII JSON payloads through PowerShell/cmd shell arguments; use `--payload-file` or `--payload-stdin`. The script rejects non-ASCII text passed via `--payload`, reads payload files as strict UTF-8, and writes Markdown/JSON as UTF-8. It does not guess whether user content "looks garbled"; reliability comes from avoiding the risky argv path. After writing state files, still verify a small sample from `_meta/current.md`, `_meta/state-lite.json`, `_meta/progress.md`, and the new session file to confirm readable text before ending the turn.
+
+Recommended pattern:
+
+```bash
+python scripts/session-commit.py <topic-path> --payload-file payload.json
+```
+
+For ad hoc Python wrappers, write the payload as UTF-8 first:
+
+```python
+from pathlib import Path
+import json
+
+Path("payload.json").write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+```
 
 ## Teaching Strategy Selection
 
@@ -154,10 +173,9 @@ python3 scripts/review-check.py _meta/spaced-repetition.md --update --results '{
 python3 scripts/review-check.py _meta/spaced-repetition.md --sync
 ```
 
-- **`scripts/session-commit.py`** - Persist a session across `current.md`, `progress.md`, `knowledge-map.md`, `spaced-repetition.md`, `notes/`, `_meta/sessions/`, and `_meta/state.json`
+- **`scripts/session-commit.py`** - Persist a session across `current.md`, `state-lite.json`, `progress.md`, `knowledge-map.md`, `spaced-repetition.md`, `notes/`, `_meta/sessions/`, and `_meta/state.json`
 ```bash
-- **`scripts/session-commit.py`** - Persist a session across `current.md`, `progress.md`, `knowledge-map.md`, `spaced-repetition.md`, `notes/`, `_meta/sessions/`, and `_meta/state.json`
-  --payload '{"module":"Module 1","concept":"Recursion","session_summary":"Covered base cases.","mastered_concepts":[{"name":"Recursion","core_idea":"A function can solve a problem by reducing it to smaller instances.","key_points":["Needs a base case","Each step reduces the problem"],"examples":["Factorial recursion"],"related":["Iteration"],"prerequisite_for":["Tree traversal"]}],"next_session":"Practice recursive tracing."}'
+python3 scripts/session-commit.py <topic-path> --payload-file payload.json
 ```
 
 ## Active Output Prompts

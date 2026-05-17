@@ -10,8 +10,8 @@ def create_app() -> FastAPI:
 
     # TODO: include users_router.
     # TODO: optionally register global exception handlers here.
-
+    app.router.include_router(users_router)
     return app
-
-
 app = create_app()
+
+

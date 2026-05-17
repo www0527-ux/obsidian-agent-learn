@@ -1,7 +1,7 @@
 {
   "version": 2,
   "topic": "fastapi + agent",
-  "updated_at": "2026-05-14",
+  "updated_at": "2026-05-15",
   "learner": {
     "level": "intermediate",
     "language": "zh-CN",
@@ -15,41 +15,49 @@
   },
   "current": {
     "module": "模块 3：FastAPI 应用架构",
-    "concept": "3.1 分层结构：router、service、repository、schema、model"
+    "concept": "3.2 用依赖注入管理数据库 session 和业务服务"
   },
   "mastered_concepts": [
     "2.3 不遮蔽数据库细节的 CRUD 写法",
-    "2.4 表关系、懒加载/预加载与 N+1 问题"
+    "2.4 表关系、懒加载/预加载与 N+1 问题",
+    "3.1 分层结构：router、service、repository、schema、model"
   ],
   "learning_concepts": [
     "2.5 Alembic 迁移与数据库结构演进",
-    "2.6 ??????????",
-    "2.6 事务、并发与失败边界"
+    "2.6 事务、并发与失败边界",
+    "3.2 用依赖注入管理数据库 session 和业务服务"
   ],
   "reviews": {
     "due": [
       {
-        "concept": "2.3 不遮蔽数据库细节的 CRUD 写法",
-        "last_reviewed": "2026-05-11",
-        "next_review": "2026-05-12",
+        "concept": "3.1 分层结构：router、service、repository、schema、model",
+        "last_reviewed": "2026-05-15",
+        "next_review": "2026-05-16",
         "interval": 1,
         "ease": 2.5
       },
       {
+        "concept": "2.3 不遮蔽数据库细节的 CRUD 写法",
+        "last_reviewed": "2026-05-14",
+        "next_review": "2026-05-17",
+        "interval": 3,
+        "ease": 2.6
+      },
+      {
         "concept": "2.4 表关系、懒加载/预加载与 N+1 问题",
-        "last_reviewed": "2026-05-11",
-        "next_review": "2026-05-12",
-        "interval": 1,
-        "ease": 2.5
+        "last_reviewed": "2026-05-14",
+        "next_review": "2026-05-17",
+        "interval": 3,
+        "ease": 2.6
       }
     ],
     "mastered": []
   },
-  "session_count": 46,
+  "session_count": 48,
   "last_session": {
-    "date": "2026-05-14",
-    "summary": "?? 2.6b ?????????????????????? FastAPI ?? demo??? app/ ???? db.py?models.py?schemas.py?exceptions.py?services/users.py?api/users.py ? main.py??? engine ?? sqlite+aiosqlite?session ?? Depends ???User.name ???????????? create_user service ?????????API ?????? UserNameConflictError ???? 409 Conflict?",
-    "next_session": "学习 3.1 的分层职责，并把现有 demo 中的 app/api、app/services、app/schemas、app/models、app/db 对号入座。",
-    "detail_path": "notes/08-layered-fastapi-architecture.md"
+    "date": "2026-05-15",
+    "summary": "完成 3.1 分层结构的运行验证：启动 05-layered-fastapi-architecture 服务，手动创建 SQLite users 表后，通过真实 HTTP 请求确认 POST /users 创建用户返回 201，重复用户名返回 409，GET /users/{id} 不存在返回 404，GET /users/1 返回 200。由此验证 router 负责 HTTP 状态转换、service 负责业务异常转换、repository 负责数据库访问的分层边界。",
+    "next_session": "进入 3.2：理解 FastAPI Depends 不只是注入 session，也可以装配业务服务；先从 get_session 的生命周期开始，再把 create_user/get_user 包成 UserService，观察 router 如何从直接调用函数变成依赖一个服务对象。",
+    "detail_path": "_meta/sessions/2026-05-15-048-3-2-session.md"
   }
 }

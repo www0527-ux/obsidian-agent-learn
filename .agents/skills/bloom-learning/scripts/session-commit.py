@@ -16,34 +16,67 @@ from learning_state import (
     MASTERY_SNAPSHOT_START,
     SESSION_LOG_END,
     SESSION_LOG_START,
-    current_path_for_topic,
     ensure_review_entry,
     iso_today,
     knowledge_map_path_for_topic,
     load_state,
     progress_path_for_topic,
-    render_current_markdown,
     render_mastery_snapshot,
     render_progress_current_state,
     render_session_log,
-    render_state_lite,
     replace_marked_section,
-    save_state,
-    save_json,
-    state_lite_path_for_topic,
     sessions_dir_for_topic,
     slugify_note_name,
     sync_spaced_repetition,
     upsert_concept,
+    write_resume_state,
 )
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Commit a learning session to Bloom Learning files")
     parser.add_argument("topic_path", help="Path to the topic directory containing _meta/")
-    parser.add_argument("--payload", required=True, help="JSON payload describing the session update")
+    payload_group = parser.add_mutually_exclusive_group(required=True)
+    payload_group.add_argument(
+        "--payload",
+        help="ASCII-only JSON payload describing the session update. Use --payload-file/--payload-stdin for non-ASCII.",
+    )
+    payload_group.add_argument("--payload-file", help="Path to a UTF-8 JSON payload file")
+    payload_group.add_argument(
+        "--payload-stdin",
+        action="store_true",
+        help="Read a UTF-8 JSON payload from stdin",
+    )
     parser.add_argument("--date", default=None, help="Override session date (YYYY-MM-DD)")
     return parser.parse_args()
+
+
+def contains_non_ascii(text: str) -> bool:
+    return any(ord(char) > 127 for char in text)
+
+
+def read_payload_text(args: argparse.Namespace) -> str:
+    if args.payload is not None:
+        if contains_non_ascii(args.payload):
+            print(
+                "Error: --payload received non-ASCII text. Use --payload-file or --payload-stdin "
+                "so UTF-8 content does not pass through shell argv.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        return args.payload
+
+    if args.payload_file:
+        try:
+            return Path(args.payload_file).read_text(encoding="utf-8")
+        except UnicodeDecodeError as exc:
+            print(f"Error: payload file is not valid UTF-8: {exc}", file=sys.stderr)
+            sys.exit(1)
+        except OSError as exc:
+            print(f"Error: cannot read payload file: {exc}", file=sys.stderr)
+            sys.exit(1)
+
+    return sys.stdin.read()
 
 
 def load_payload(raw_payload: str) -> dict:
@@ -204,13 +237,12 @@ def write_session_detail(topic_dir: Path, session_entry: dict) -> str:
 
 
 def update_current(topic_dir: Path, state: dict) -> None:
-    current_path_for_topic(topic_dir).write_text(render_current_markdown(state), encoding="utf-8")
-    save_json(state_lite_path_for_topic(topic_dir), render_state_lite(state))
+    write_resume_state(topic_dir, state)
 
 
 def main() -> None:
     args = parse_args()
-    payload = load_payload(args.payload)
+    payload = load_payload(read_payload_text(args))
     topic_dir = Path(args.topic_path)
     session_date = args.date or iso_today()
 
@@ -271,11 +303,10 @@ def main() -> None:
     session_entry["detail_path"] = write_session_detail(topic_dir, session_entry)
     state.setdefault("sessions", []).append(session_entry)
 
-    save_state(topic_dir, state)
+    sync_spaced_repetition(topic_dir, state)
     update_current(topic_dir, state)
     update_progress(topic_dir, state)
     update_knowledge_map(topic_dir, state, mastered_names)
-    sync_spaced_repetition(topic_dir, state)
 
     print("Session committed successfully.")
 

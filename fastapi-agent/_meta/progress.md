@@ -2,11 +2,11 @@
 
 ## 当前状态
 <!-- BLOOM:CURRENT_STATE:START -->
-- **Current module**: ?? 2????? SQLAlchemy
-- **Current concept**: 2.6 ??????????
-- **Overall mastery**: 2/5 concepts mastered
-- **Session count**: 46
-- **Last session**: 2026-05-13
+- **Current module**: 模块 3：FastAPI 应用架构
+- **Current concept**: 3.2 用依赖注入管理数据库 session 和业务服务
+- **Overall mastery**: 3/6 concepts mastered
+- **Session count**: 48
+- **Last session**: 2026-05-15
 - **Learner level**: intermediate
 <!-- BLOOM:CURRENT_STATE:END -->
 
@@ -24,23 +24,42 @@
 ## 学习记录
 
 <!-- BLOOM:SESSION_LOG:START -->
+### Session 48 - 2026-05-15
+- Summary: 完成 3.1 分层结构的运行验证：启动 05-layered-fastapi-architecture 服务，手动创建 SQLite users 表后，通过真实 HTTP 请求确认 POST /users 创建用户返回 201，重复用户名返回 409，GET /users/{id} 不存在返回 404，GET /users/1 返回 200。由此验证 router 负责 HTTP 状态转换，service 负责业务异常转换，repository 负责数据库访问的分层边界。
+- Module: 模块 3：FastAPI 应用架构
+- Concept: 3.2 用依赖注入管理数据库 session 和业务服务
+- Covered concepts: 3.1 分层结构：router、service、repository、schema、model, HTTP 请求验证分层异常边界, FastAPI router 中业务异常到 HTTPException 的转换
+- Mastered: 3.1 分层结构：router、service、repository、schema、model
+- Struggles: 当前 demo 仍需要手动建表，app/db/session.py 的 create_all_tables 还未实现; router 中异常处理仍有少量重复代码和 TODO 注释，后续可在测试或全局异常处理阶段整理
+- Wins: 用真实服务验证了 3.1 的关键路径，而不只是静态阅读代码; 确认 409 和 404 的错误边界符合预期; 看到了 create_all_tables 尚未实现导致启动和建表职责还需要在后续补齐
+- Next session: 进入 3.2：理解 FastAPI Depends 不只是注入 session，也可以装配业务服务；先从 get_session 的生命周期开始，再把 create_user/get_user 包成 UserService，观察 router 如何从直接调用函数变成依赖一个服务对象。
+
+### Session 47 - 2026-05-14
+- Summary: 完成 05-layered-fastapi-architecture demo 的分层架构实践：schemas 定义输入输出模型，repository 封装查询与持久化，service 编排创建/查询用户并把完整性约束冲突转换成 UserNameConflictError，router 捕获业务错误和 SQLAlchemyError 并转换成对应 HTTP 响应。
+- Module: 模块 3：FastAPI 应用架构
+- Concept: 3.1 分层结构：router、service、repository、schema、model
+- Covered concepts: 3.1 分层结构：router、service、repository、schema、model, 业务异常与 HTTP 异常的边界, IntegrityError 到业务错误的转换, SQLAlchemyError 向上抛出并由 router 转换为 HTTP 500
+- Struggles: 还需要通过请求或测试验证 404、409、500 路径; 代码中仍有少量 TODO、格式和重复构造异常对象的小问题
+- Wins: 能区分业务异常和基础设施异常; 把唯一性约束冲突从 IntegrityError 转换成更具体的业务错误; 让 router 统一承担 HTTPException/status_code/detail 的转换职责
+- Next session: 用几个最小测试或 curl/httpx 请求验证 POST /users 重名返回 409、GET /users/{id} 不存在返回 404，并清理异常处理代码中的小重复；通过验证后再把 3.1 标记为掌握。
+
 ### Session 46 - 2026-05-13
-- Summary: ?? 2.6b ?????????????????????? FastAPI ?? demo??? app/ ???? db.py?models.py?schemas.py?exceptions.py?services/users.py?api/users.py ? main.py??? engine ?? sqlite+aiosqlite?session ?? Depends ???User.name ???????????? create_user service ?????????API ?????? UserNameConflictError ???? 409 Conflict?
-- Module: ?? 2????? SQLAlchemy
-- Concept: 2.6 ??????????
-- Covered concepts: ?? FastAPI + SQLAlchemy demo ?????, AsyncSession ????, ???????? API 409 ?????
-- Struggles: ?? Python ???? aiosqlite??? app ??????????; create_user service ??????????????
-- Wins: ???? FastAPI app ??; ?????????????? create_user ????; ?? py_compile ????
-- Next session: ?? app/services/users.py ?? async create_user?add?commit?refresh??? IntegrityError ? rollback ? raise UserNameConflictError????? FastAPI???? POST /users ??????? 409?
+- Summary: 完成 2.6b 唯一约束冲突到 API 响应的串联练习：在 FastAPI demo 中搭建 app/ 结构，包含 db.py、models.py、schemas.py、exceptions.py、services/users.py、api/users.py 和 main.py。使用 sqlite+aiosqlite、AsyncSession 与 Depends 管理数据库 session，并通过 User.name 唯一约束制造冲突；create_user service 捕获数据库完整性错误后抛出 UserNameConflictError，API 层将其转换为 409 Conflict。
+- Module: 模块 2：数据库与 SQLAlchemy
+- Concept: 2.6 事务、并发与失败边界
+- Covered concepts: 最小 FastAPI + SQLAlchemy demo 结构, AsyncSession 生命周期, 唯一约束冲突到 API 409 的转换
+- Struggles: Python 运行环境需要安装 aiosqlite 并确保 app 包能正确导入; create_user service 的事务边界还需要继续打磨
+- Wins: FastAPI app 可以正常启动; 成功把唯一约束冲突转换为 UserNameConflictError; 通过 py_compile 做了基础语法检查
+- Next session: 在 app/services/users.py 中完善 async create_user：add、commit、refresh，并在 IntegrityError 时 rollback 后抛出 UserNameConflictError；随后用 FastAPI 请求验证 POST /users 重复用户名返回 409。
 
 ### Session 45 - 2026-05-13
-- Summary: ???? 2.6b ??????????? lost update ?????? UPDATE ???????? concurrency_examples.py??? LearningRecord ?? view_count ??????? session ???? view_count=0 ????? +1????????? 1?????? session ??????????????? SQLAlchemy update(...).values(view_count=LearningRecord.view_count + 1) ? +1 ???????????????????? 2????????? UPDATE ????????
-- Module: ?? 2????? SQLAlchemy
-- Concept: 2.6 ??????????
-- Covered concepts: lost update ????????, Python ?????-?-??????? UPDATE ???, ???? Session ??????
-- Struggles: ??????? IntegrityError -> 409 ??????; 2.6 ??????????????????
-- Wins: ????? concurrency_examples.py; ????? ORM ?????? view_count=1; ??????? view_count = view_count + 1 ?? view_count=2
-- Next session: ?? 2.6b?? User.name ????????????????????????? IntegrityError??????? FastAPI ???? 409 Conflict?
+- Summary: 继续 2.6b 并发与冲突边界学习，重点观察 lost update 与数据库原子 UPDATE 的区别。通过 concurrency_examples.py 演示：两个 session 都读到 LearningRecord.view_count = 0 后分别在 Python 中 +1，最后只能留下 1，这就是 lost update；改用 SQLAlchemy update(...).values(view_count=LearningRecord.view_count + 1) 后，加一操作在数据库中完成，两次更新可以得到 view_count = 2。
+- Module: 模块 2：数据库与 SQLAlchemy
+- Concept: 2.6 事务、并发与失败边界
+- Covered concepts: lost update 的发生机制, Python 读-改-写与数据库原子 UPDATE 的区别, 多个 Session 并发修改同一行数据的风险
+- Struggles: 还需要继续处理 IntegrityError -> 409 的 API 边界; 2.6 的并发和冲突处理还需要再用 FastAPI demo 串起来
+- Wins: 创建并运行 concurrency_examples.py; 观察到 ORM 读-改-写后 view_count = 1; 观察到数据库原子 UPDATE 后 view_count = 2
+- Next session: 继续 2.6b：围绕 User.name 唯一约束冲突，练习把数据库 IntegrityError 转换为业务异常，再由 FastAPI API 返回 409 Conflict。
 
 ### Session 44 - 2026-05-12
 - Summary: 开始学习 2.6 事务、并发与失败边界。本次重点完成事务与失败边界部分：理解 commit 是事务结束并确认成功的标志，flush 会发送 SQL 并可拿到数据库生成的 id，但不会结束事务；rollback 可以撤销同一事务中尚未提交的 flush 操作。通过新建 demos/04-transaction-boundaries 练习，观察提前 commit 会留下半完成状态，flush + rollback 可以保持原子性，with session.begin() 可以自动提交或回滚。完成 tasks.py 三个实践任务并通过 check_tasks.py，能处理 user + default record 的原子创建、NOT NULL 失败回滚、外键失败回滚。已意识到 2.6 的并发部分尚未学习，需要继续 2.6b。

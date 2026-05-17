@@ -8,8 +8,8 @@ from app.db.session import AsyncSessionLocal
 
 
 async def get_session() -> AsyncIterator[AsyncSession]:
-    # TODO: yield one AsyncSession per request.
-    raise NotImplementedError
+    async with AsyncSessionLocal() as session:
+        yield session
 
 
 # Optional advanced version:
